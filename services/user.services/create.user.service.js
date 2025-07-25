@@ -1,5 +1,5 @@
 const { Users } = require('../../models');
-const createSelfPersonService = require('../../person.services/create_self.person.service');
+const createSelfPersonService = require('../person.services/create_self.person.service');
 
 /**
  * Creates a new user

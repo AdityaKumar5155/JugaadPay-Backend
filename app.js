@@ -17,6 +17,8 @@ app.use((req, res, next) => {
   next();
 });
 
+const authRoutes = require('./routes/auth.routes');
+app.use('/auth', authRoutes);
 
 
 app.listen(3000, () => {

@@ -6,9 +6,11 @@ const { Persons } = require('../../models');
  * @param {Object} updateData - Fields to update
  * @returns {Promise<Object|null>} Updated person instance or null if not found
  */
-const updatePersonService = async (personId, updateData, transaction) => {
+const updatePersonService = async (personId, updateData, userId, transaction) => {
   try {
-    const person = await Persons.findByPk(personId);
+    const person = await Persons.findByPk({
+        where: { id: personId, user_id: userId }
+    });
     if (!person) return null;
     await person.update(updateData, transaction ? { transaction } : undefined);
     return person;
