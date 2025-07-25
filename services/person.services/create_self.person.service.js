@@ -6,13 +6,13 @@ const { Persons } = require('../../models');
  * @param {number} user_id - The user ID to associate
  * @returns {Promise<Object>} Created person instance
  */
-async function createSelfPerson(personData, user_id, transaction) {
+const createSelfPersonService = async (personData, user_id, transaction) => {
   try {
     const person = await Persons.create({ ...personData, user_id, debt_amount: 0, is_self: true }, transaction ? { transaction } : undefined);
     return person;
   } catch (error) {
     throw error;
   }
-}
+};
 
-module.exports = { createSelfPerson };
+module.exports = createSelfPersonService;

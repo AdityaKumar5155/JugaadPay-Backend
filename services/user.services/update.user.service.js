@@ -1,5 +1,5 @@
 const { Users } = require('../../models');
-const { updateSelfPerson } = require('../../person.services/update_self.person.service');
+const updateSelfPersonService = require('../../person.services/update_self.person.service');
 
 /**
  * Updates a user by ID
@@ -7,13 +7,13 @@ const { updateSelfPerson } = require('../../person.services/update_self.person.s
  * @param {Object} updateData - Fields to update
  * @returns {Promise<Object|null>} Updated user instance or null if not found
  */
-async function updateUserService(userId, updateData, transaction) {
+const updateUserService = async (userId, updateData, transaction) => {
   try {
     const user = await Users.findByPk(userId);
     if (!user) return null;
     await user.update(updateData, transaction ? { transaction } : undefined);
     // Update self person for this user
-    await updateSelfPerson(userId, {
+    await updateSelfPersonService(userId, {
       first_name: user.first_name,
       last_name: user.last_name,
       mobile: user.mobile,
@@ -23,6 +23,6 @@ async function updateUserService(userId, updateData, transaction) {
   } catch (error) {
     throw error;
   }
-}
+};
 
 module.exports = updateUserService;

@@ -7,7 +7,7 @@ const { Persons } = require('../../models');
  * @param {Object} [transaction] - Optional transaction
  * @returns {Promise<Object|null>} Updated person instance or null if not found
  */
-async function updateSelfPerson(user_id, updateData, transaction) {
+const updateSelfPersonService = async (user_id, updateData, transaction) => {
   try {
     const person = await Persons.findOne({ where: { user_id, is_self: true } });
     if (!person) return null;
@@ -16,6 +16,6 @@ async function updateSelfPerson(user_id, updateData, transaction) {
   } catch (error) {
     throw error;
   }
-}
+};
 
-module.exports = { updateSelfPerson };
+module.exports = updateSelfPersonService;

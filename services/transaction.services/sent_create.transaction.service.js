@@ -8,7 +8,7 @@ const { Transactions, Persons, Transaction_Payees } = require('../../models');
  * @param {Object} [transaction] - Optional transaction
  * @returns {Promise<Object>} Created transaction instance
  */
-async function createSentTransaction(transactionData, user_id, transaction) {
+const createSentTransactionService = async (transactionData, user_id, transaction) => {
   const { payees, ...txData } = transactionData;
   let t = transaction;
   let createdTransaction = false;
@@ -43,4 +43,4 @@ async function createSentTransaction(transactionData, user_id, transaction) {
   }
 }
 
-module.exports = { createSentTransaction };
+module.exports = createSentTransactionService;

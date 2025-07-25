@@ -1,12 +1,12 @@
 const { Users } = require('../../models');
-const { createSelfPerson } = require('../../person.services/create_self.person.service');
+const createSelfPersonService = require('../../person.services/create_self.person.service');
 
 /**
  * Creates a new user
  * @param {Object} userData - { first_name, last_name, mobile, email, password }
  * @returns {Promise<Object>} Created user instance
  */
-async function createUserService(userData, transaction) {
+const createUserService = async (userData, transaction) => {
   let t = transaction;
   let createdTransaction = false;
   if (!t) {
@@ -15,7 +15,7 @@ async function createUserService(userData, transaction) {
   }
   try {
     const user = await Users.create(userData, { transaction: t });
-    await createSelfPerson({
+    await createSelfPersonService({
       first_name: user.first_name,
       last_name: user.last_name,
       mobile: user.mobile,
@@ -28,6 +28,6 @@ async function createUserService(userData, transaction) {
     if (createdTransaction && t) await t.rollback();
     throw error;
   }
-}
+};
 
 module.exports = createUserService;
