@@ -8,7 +8,7 @@ const { Persons } = require('../../models');
  */
 const updatePersonService = async (personId, updateData, userId, transaction) => {
   try {
-    const person = await Persons.findByPk({
+    const person = await Persons.findOne({
         where: { id: personId, user_id: userId }
     });
     if (!person) return null;

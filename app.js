@@ -18,7 +18,10 @@ app.use((req, res, next) => {
 });
 
 const authRoutes = require('./routes/auth.routes');
+const personRoutes = require('./routes/person.routes');
+
 app.use('/auth', authRoutes);
+app.use('/persons', personRoutes);
 
 
 app.listen(3000, () => {

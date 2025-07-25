@@ -1,6 +1,6 @@
 const { z } = require('zod');
 
-const createPersonSchema = z.object({
+const updatePersonSchema = z.object({
   first_name: z.string({
     error: (issue) => {
       if (issue.input === undefined) return 'First name is required.';
@@ -44,4 +44,4 @@ const createPersonSchema = z.object({
   }).optional()
 });
 
-module.exports = createPersonSchema;
+module.exports = updatePersonSchema;
