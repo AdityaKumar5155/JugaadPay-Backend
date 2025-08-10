@@ -11,9 +11,13 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use((req, res, next) => {
   if (req.body && Buffer.isBuffer(req.body)) {
-    req.rawBody = req.body;
-    req.body = req.body.toString();
-    req.body = JSON.parse(req.body);
+    try{
+      req.rawBody = req.body;
+      req.body = req.body.toString();
+      req.body = JSON.parse(req.body);
+    } catch (error) {
+      console.error('Error parsing body:', error);
+    }
   }
   next();
 });
