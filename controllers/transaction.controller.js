@@ -1,4 +1,4 @@
-const getTransactionByIdService = require('../services/transaction.services/get_transaction_by_id.service');
+const getTransactionByIdService = require('../services/transaction.services/get_by_id.transaction.service');
 const createSentTransactionService = require('../services/transaction.services/sent_create.transaction.service');
 const createReceivedTransactionService = require('../services/transaction.services/received_create.transaction.service');
 const getByUserIdTransactionService = require('../services/transaction.services/get_by_user_id.transaction.service');

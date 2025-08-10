@@ -23,14 +23,12 @@ const personRoutes = require('./routes/person.routes');
 const userRoutes = require('./routes/user.routes');
 const transactionRoutes = require('./routes/transaction.routes');
 const transactionPayeesRoutes = require('./routes/transaction_payees.routes');
-const passwordRoutes = require('./routes/password.routes');
 
 app.use('/auth', authRoutes);
 app.use('/persons', personRoutes);
 app.use('/users', userRoutes);
 app.use('/transactions', transactionRoutes);
 app.use('/transaction-payees', transactionPayeesRoutes);
-app.use('/password', passwordRoutes);
 
 
 app.listen(3000, () => {

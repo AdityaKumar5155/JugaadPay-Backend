@@ -3,4 +3,4 @@ const TRANSACTION_TYPES = Object.freeze({
   RECEIVED: 'Received'
 });
 
-module.exports = { TRANSACTION_TYPES };S
+module.exports = { TRANSACTION_TYPES };

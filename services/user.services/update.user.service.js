@@ -1,5 +1,5 @@
 const { Users } = require('../../models');
-const updateSelfPersonService = require('../../person.services/update_self.person.service');
+const updateSelfPersonService = require('../../services/person.services/update_self.person.service');
 
 /**
  * Updates a user by ID
