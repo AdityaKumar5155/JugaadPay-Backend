@@ -27,9 +27,12 @@ module.exports = {
     "dialect": "postgres",
     "dialectModule": require('pg'),
     "timezone": "+00:00",
-    "ssl": {
-      "require": true,
-      "rejectUnauthorized": false
+    "dialectOptions": {
+        "ssl": {
+          "require": true,
+          "rejectUnauthorized": false
+
+      }
     }
   }
 }
