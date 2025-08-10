@@ -9,6 +9,12 @@ module.exports = (sequelize, DataTypes) => {
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE'
             })
+            this.hasMany(models.Transactions, {
+                foreignKey: 'payer_id',
+                as: 'transactions',
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE'
+            })
         }
   }
 

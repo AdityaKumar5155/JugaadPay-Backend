@@ -2,6 +2,7 @@ const createPersonSchema = require("../schemas/person.schemas.js/create.person.s
 const updatePersonSchema = require("../schemas/person.schemas.js/update.person.schema");
 const createPersonService = require("../services/person.services/create.person.service");
 const getByUserIdPersonService = require("../services/person.services/get_by_user_id.person.service");
+const getNumberOfPersonsByUserIdPersonService = require("../services/person.services/get_number_of_persons_by_user_id.person.service");
 const getPersonByIdService = require("../services/person.services/get_person_by_id.service");
 const updatePersonService = require("../services/person.services/update.person.service");
 
@@ -50,10 +51,18 @@ const updatePerson = async (req, res) => {
 const getAllPersons = async (req, res) => {
     try {
         const userId = req.user.id;
-        const persons = await getByUserIdPersonService(userId);
+        const page = parseInt(req.params.page) || 1;
+        const filters = req.query || {};
+        const persons = await getByUserIdPersonService(userId, null, page, filters);
+        const totalCount = await getNumberOfPersonsByUserIdPersonService(userId);
+        const pages = Math.ceil(totalCount / 50); // Assuming 50 items per page
         res.status(200).json({
             success: true,
-            data: persons
+            data: {
+                persons,
+                totalCount,
+                pages
+            }
         });
     } catch (error) {
         console.error('Error fetching persons:', error);

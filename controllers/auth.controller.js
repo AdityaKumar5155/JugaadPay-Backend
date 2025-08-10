@@ -7,6 +7,9 @@ const createAuthOtpService = require("../services/otp.services/create_auth.otp.s
 const verifyAuthOtpService = require("../services/otp.services/verify_auth.otp.service");
 const createUserService = require("../services/user.services/create.user.service");
 const getByEmailUserService = require("../services/user.services/get_by_email.user.service");
+const createPasswordResetOtpService = require('../services/otp.services/create_password_reset.otp.service');
+const resetPasswordService = require('../services/user.services/reset_password.user.service');
+const changePasswordService = require('../services/user.services/change_password.user.service');
 
 const sendAuthOTPToEmail = async (req, res) => {
     try{
@@ -76,9 +79,52 @@ const login = async (req, res) => {
     }
 }
 
+// Send OTP for password reset
+const sendPasswordResetOTP = async (req, res) => {
+  try {
+    const { email } = req.body || {};
+    if (!email) return res.status(400).json({ message: 'Email is required' });
+    await createPasswordResetOtpService(email);
+    return res.status(200).json({ success: true, message: 'OTP sent successfully' });
+  } catch (error) {
+    return res.status(500).json({ message: error.message || 'Internal server error' });
+  }
+};
+
+// Reset password using OTP
+const resetPassword = async (req, res) => {
+  try {
+    const { email, otp, newPassword } = req.body || {};
+    if (!email || !otp || !newPassword) {
+      return res.status(400).json({ message: 'Email, OTP and newPassword are required' });
+    }
+    await resetPasswordService(email, otp, newPassword);
+    return res.status(200).json({ success: true, message: 'Password reset successfully' });
+  } catch (error) {
+    return res.status(500).json({ message: error.message || 'Internal server error' });
+  }
+};
+
+// Change password using old password (authenticated)
+const changePassword = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { oldPassword, newPassword } = req.body || {};
+    if (!oldPassword || !newPassword) {
+      return res.status(400).json({ message: 'oldPassword and newPassword are required' });
+    }
+    await changePasswordService(userId, oldPassword, newPassword);
+    return res.status(200).json({ success: true, message: 'Password changed successfully' });
+  } catch (error) {
+    return res.status(500).json({ message: error.message || 'Internal server error' });
+  }
+};
 
 module.exports = {
     sendAuthOTPToEmail,
     signUp,
-    login
+    login,
+    sendPasswordResetOTP,
+    resetPassword,
+    changePassword
 }
