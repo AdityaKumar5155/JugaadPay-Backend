@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE'
             })
+            this.belongsTo(models.Persons,{
+                foreignKey: 'payee_id',
+                as: 'person',
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE'
+            })
         }
   }
 
@@ -32,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Transaction_Payees',
     tableName: 'transaction_payees',
+    timestamps: false,
     indexes: [
       { fields: ['payee_id'], name: 'transaction_payees_payee_id_idx' },
       { fields: ['transaction_id'], name: 'transaction_payees_transaction_id_idx' }

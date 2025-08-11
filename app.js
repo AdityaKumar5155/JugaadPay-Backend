@@ -31,6 +31,6 @@ app.use('/transactions', transactionRoutes);
 app.use('/transaction-payees', transactionPayeesRoutes);
 
 
-app.listen(3000, () => {
+app.listen(3000, '0.0.0.0', () => {
   console.log('Server is running on port 3000');
 });

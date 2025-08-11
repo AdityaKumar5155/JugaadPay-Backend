@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE'
             })
+            this.hasMany(models.Transaction_Payees, {
+                foreignKey: 'transaction_id',
+                as: 'payees',
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE'
+            })
         }
   }
 

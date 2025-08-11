@@ -13,9 +13,15 @@ const getByUserIdTransactionService = async (user_id, transaction, page = 1, fil
   }
 
   const filter = {
-    datetime: Object.keys(datetimeFilter).length ? datetimeFilter : undefined,
-    type: filters.type ? { $in: Array.isArray(filters.type) ? filters.type : [filters.type] } : undefined
+    
+   
   };
+  if (Object.keys(datetimeFilter).length) {
+    filter.datetime = datetimeFilter;
+  }
+  if (filters.type) {
+    filter.type = { $in: Array.isArray(filters.type) ? filters.type : [filters.type] };
+  }
 
   const limit = 50;
   const offset = (page - 1) * limit;

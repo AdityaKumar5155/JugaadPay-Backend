@@ -5,7 +5,7 @@ const getTransactionPayees = async (req, res) => {
   try {
     const userId = req.user.id;
     const transactionId = req.params.transactionId;
-    const payees = await getTransactionPayeesByTransactionIdService(transactionId, userId);
+    const payees = await getTransactionPayeesByTransactionIdService(transactionId, null);
     res.status(200).json({ success: true, data: payees });
   } catch (error) {
     res.status(500).json({ error: 'An error occurred while fetching payees.' });

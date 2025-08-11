@@ -35,9 +35,15 @@ const createSentTransactionService = async (transactionData, user_id, transactio
         await Transaction_Payees.create({ transaction_id: transactionInstance.id, payee_id, amount }, { transaction: t });
       }
     }
+    // Deduct debt_amount from self person
+    const currentSelfPersonDebt = selfPerson.debt_amount;
+    await selfPerson.update({
+      debt_amount: currentSelfPersonDebt-txData.amount
+    }, {transaction: t});
     if (createdTransaction) await t.commit();
     return transactionInstance;
   } catch (error) {
+    console.error(error);
     if (createdTransaction && t) await t.rollback();
     throw error;
   }

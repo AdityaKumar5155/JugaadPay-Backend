@@ -20,9 +20,14 @@ const getByUserIdPersonService = async (user_id, transaction, page = 1, filters 
   const offset = (page - 1) * limit;
 
   const filter = {
-    mobile: filters.mobile ? { $like: `%${filters.mobile}%` } : undefined,
-    email: filters.email ? { $iLike: `%${filters.email}%` } : undefined
   };
+  if (filters.mobile) {
+    filter.mobile = { [Op.like]: `%${filters.mobile}%` };
+  }
+  if (filters.email) {
+    filter.email = { [Op.iLike]: `%${filters.email}%` };
+  }
+
 
   const where = buildWhereClause(user_id, filter);
 

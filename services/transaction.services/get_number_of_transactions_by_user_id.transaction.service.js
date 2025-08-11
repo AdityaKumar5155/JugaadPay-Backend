@@ -12,9 +12,15 @@ const getNumberOfTransactionsByUserId = async (user_id, transaction, filters = {
   }
 
   const filter = {
-    datetime: Object.keys(datetimeFilter).length ? datetimeFilter : undefined,
-    type: filters.type ? { $in: Array.isArray(filters.type) ? filters.type : [filters.type] } : undefined
+    
   };
+  if (Object.keys(datetimeFilter).length) {
+    filter.datetime = datetimeFilter;
+  }
+  if (filters.type) {
+    filter.type = { $in: Array.isArray(filters.type) ? filters.type : [filters.type] };
+  }
+
 
   const where = buildWhereClause(user_id, filter);
   return await Transactions.count({

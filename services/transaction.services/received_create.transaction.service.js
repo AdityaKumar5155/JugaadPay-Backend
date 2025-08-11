@@ -41,6 +41,7 @@ async function createReceivedTransaction(transactionData, user_id, transaction) 
     if (createdTransaction) await t.commit();
     return transactionInstance;
   } catch (error) {
+    console.error(error);
     if (createdTransaction && t) await t.rollback();
     throw error;
   }

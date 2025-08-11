@@ -120,11 +120,21 @@ const changePassword = async (req, res) => {
   }
 };
 
+const validateAuthToken = (req, res) => {
+    const user = req.user;
+    res.status(200).json({
+        success: true,
+        message: 'Token is valid',
+        data: user
+    })
+}
+
 module.exports = {
     sendAuthOTPToEmail,
     signUp,
     login,
     sendPasswordResetOTP,
     resetPassword,
-    changePassword
+    changePassword,
+    validateAuthToken
 }
