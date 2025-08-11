@@ -1,0 +1,51 @@
+name: Build and Deploy SAM Application
+
+on:
+  push:
+    branches:
+      - master # Trigger on push to the main branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ vars.AWS_ACCESS_KEY_ID_ }}
+          aws-secret-access-key: ${{ vars.AWS_SECRET_ACCESS_KEY_ }}
+          aws-region: ap-south-1
+
+      - name: Install SAM CLI
+        run: |
+          pip install aws-sam-cli
+
+      - name: Build SAM Application
+        run: |
+          sam build
+
+      - name: Deploy SAM Application
+        run: |
+          sam deploy \
+            --stack-name jugaadpay-backend \
+            --s3-bucket jugaadpay-backend-sam \
+            --capabilities CAPABILITY_IAM \
+            --parameter-overrides \
+              AwsAccessKeyId=${{ vars.AWS_ACCESS_KEY_ID_ }} \
+              AwsRegion=ap-south-1 \
+              AwsSecretAccessKey=${{ vars.AWS_SECRET_ACCESS_KEY_ }} \
+              DbHost=${{ vars.DB_HOST }} \
+              DbName=${{ vars.DB_NAME }} \
+              DbPassword=${{ vars.DB_PASSWORD }} \
+              DbUser=${{ vars.DB_USER }} \
+              EmailHost=${{ vars.EMAIL_HOST }} \
+              EmailPass=${{ vars.EMAIL_PASS }} \
+              EmailPort=${{ vars.EMAIL_PORT }} \
+              EmailSecure=${{ vars.EMAIL_SECURE }} \
+              EmailUser=${{ vars.EMAIL_USER }} \
+              JwtSecret=${{ vars.JWT_SECRET }} \
+              NodeEnv=${{ vars.NODE_ENV }} \
