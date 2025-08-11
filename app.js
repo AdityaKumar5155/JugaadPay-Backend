@@ -10,10 +10,13 @@ app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json());
 app.use((req, res, next) => {
-  if (Buffer.isBuffer(req.body)) {
+  try{
+    if (Buffer.isBuffer(req.body)) {
     req.rawBody = req.body;
     req.body = req.body.toString();
     req.body = JSON.parse(req.body);
+    }
+  } catch (error) {
   }
   next();
 });
