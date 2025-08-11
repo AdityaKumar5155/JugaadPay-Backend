@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
+const serverless = require('serverless-http');
 
 // Middleware setup
 app.use(cors());
@@ -30,7 +31,4 @@ app.use('/users', userRoutes);
 app.use('/transactions', transactionRoutes);
 app.use('/transaction-payees', transactionPayeesRoutes);
 
-
-app.listen(3000, '0.0.0.0', () => {
-  console.log('Server is running on port 3000');
-});
+module.exports.handler = serverless(app);

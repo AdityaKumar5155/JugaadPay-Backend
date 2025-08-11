@@ -43,7 +43,7 @@ jobs:
               DbPassword=${{ vars.DB_PASSWORD }} \
               DbUser=${{ vars.DB_USER }} \
               EmailHost=${{ vars.EMAIL_HOST }} \
-              EmailPass=${{ vars.EMAIL_PASS }} \
+              EmailPass=${{ vars.EMAIL_PASSWORD }} \
               EmailPort=${{ vars.EMAIL_PORT }} \
               EmailSecure=${{ vars.EMAIL_SECURE }} \
               EmailUser=${{ vars.EMAIL_USER }} \

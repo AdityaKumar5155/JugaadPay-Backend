@@ -55,7 +55,7 @@ Resources:
           DB_PASSWORD: !Ref DbPassword
           DB_USER: !Ref DbUser
           EMAIL_HOST: !Ref EmailHost
-          EMAIL_PASS: !Ref EmailPass
+          EMAIL_PASSWORD: !Ref EmailPass
           EMAIL_PORT: !Ref EmailPort
           EMAIL_SECURE: !Ref EmailSecure
           EMAIL_USER: !Ref EmailUser
