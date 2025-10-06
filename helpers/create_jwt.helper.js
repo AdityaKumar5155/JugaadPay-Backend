@@ -5,7 +5,7 @@ const createJwt = (payload) => {
     if (!secret) {
         throw new Error('JWT secret is not defined in environment variables');
     }
-    return jwt.sign(payload, secret, { expiresIn: '1d' });
+    return jwt.sign(payload, secret, { expiresIn: '365d' });
 }
 
 module.exports = createJwt;
