@@ -6,7 +6,7 @@ const { Transactions, Transaction_Payees,Persons } = require('../../models');
  * @returns {Promise<Object|null>} Transaction instance or null if not found
  */
 const getByIdTransactionService = async (transactionId, transaction) => {
-  return await Transactions.findOne({
+  const transactionRecord = await Transactions.findOne({
     where: { id: transactionId },
     include: [
       {
@@ -19,9 +19,16 @@ const getByIdTransactionService = async (transactionId, transaction) => {
             attributes: ['id', 'first_name', 'last_name', 'mobile', 'email']
           }
         ]
+      },
+      {
+        model: Persons,
+        as: 'payer',
+        attributes: ['first_name', 'last_name']
       }
     ]
   }, transaction ? { transaction } : undefined);
+  console.log('Fetched transaction by ID:', JSON.stringify(transactionRecord, null, 2));
+  return transactionRecord;
 };
 
 module.exports = getByIdTransactionService;

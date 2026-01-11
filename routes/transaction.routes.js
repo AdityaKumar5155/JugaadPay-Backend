@@ -15,7 +15,7 @@ router.post('/sent', authMiddleware, createSentTransaction);
 router.post('/received', authMiddleware, createReceivedTransaction);
 
 // Get paginated/filterable transactions
-router.get('/page/:page', authMiddleware, getTransactions);
+router.get('/', authMiddleware, getTransactions);
 
 // Get transaction by id
 router.get('/:id', authMiddleware, getTransactionById);

@@ -9,13 +9,8 @@ const getNumberOfTransactionsByUserIdService = require('../services/transaction.
 const getTransactions = async (req, res) => {
   try {
     const user_id = req.user.id;
-    const page = parseInt(req.query.page, 10) || 1;
-    const filters = {
-      from: req.query.from,
-      to: req.query.to,
-      type: req.query.type ? (Array.isArray(req.query.type) ? req.query.type : req.query.type.split(',')) : undefined
-    };
-    const transactions = await getByUserIdTransactionService(user_id, null, page, filters);
+    const filters = req.query || {};
+    const transactions = await getByUserIdTransactionService(user_id, null, filters);
 
     // Get total count for pagination
     const totalCount = await getNumberOfTransactionsByUserIdService(user_id, null, filters);

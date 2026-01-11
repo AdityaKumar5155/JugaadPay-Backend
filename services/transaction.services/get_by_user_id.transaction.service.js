@@ -1,38 +1,36 @@
-const { Transactions } = require('../../models');
+const { Transactions, Persons } = require('../../models');
 const buildWhereClause = require('../../helpers/build_where_clause.helper');
 
 
-const getByUserIdTransactionService = async (user_id, transaction, page = 1, filters = {}) => {
-  let datetimeFilter = {};
-  if (filters.from && filters.to) {
-    datetimeFilter = { $between: [filters.from, filters.to] };
-  } else if (filters.from) {
-    datetimeFilter = { $gte: filters.from };
-  } else if (filters.to) {
-    datetimeFilter = { $lte: filters.to };
+const getByUserIdTransactionService = async (user_id, transaction, filters = {}) => {
+  const filter = {};
+
+  if (filters.month && filters.year) {
+    const startDate = new Date(filters.year, filters.month - 1, 1);
+    const endDate = new Date(filters.year, filters.month, 0, 23, 59, 59, 999);
+    filter.datetime = { $between: [startDate, endDate] };
   }
 
-  const filter = {
-    
-   
-  };
-  if (Object.keys(datetimeFilter).length) {
-    filter.datetime = datetimeFilter;
-  }
   if (filters.type) {
     filter.type = { $in: Array.isArray(filters.type) ? filters.type : [filters.type] };
   }
 
-  const limit = 50;
-  const offset = (page - 1) * limit;
   const where = buildWhereClause(user_id, filter);
-  return await Transactions.findAll({
+  const transactions = await Transactions.findAll({
     where,
+    include: [
+      {
+        model: Persons,
+        as: 'payer',
+        attributes: ['first_name', 'last_name']
+      }
+    ],
     attributes: { exclude: [''] }, // No sensitive fields in Transactions
-    limit,
-    offset,
+    order: [['datetime', 'DESC']],
     ...(transaction ? { transaction } : {} )
   });
+  console.log('Fetched transactions:', JSON.stringify(transactions, null, 2));
+  return transactions;
 };
 
 module.exports = getByUserIdTransactionService;

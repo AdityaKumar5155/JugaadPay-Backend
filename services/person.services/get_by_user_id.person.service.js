@@ -15,15 +15,14 @@ const { Op } = require('sequelize');
  */
 
 
-const getByUserIdPersonService = async (user_id, transaction, page = 1, filters = {}) => {
-  const limit = 50;
-  const offset = (page - 1) * limit;
+const getByUserIdPersonService = async (user_id, transaction, filters = {}) => {
 
-  const filter = {
-  };
+  const filter = {};
+
   if (filters.mobile) {
     filter.mobile = { [Op.like]: `%${filters.mobile}%` };
   }
+  
   if (filters.email) {
     filter.email = { [Op.iLike]: `%${filters.email}%` };
   }
@@ -33,8 +32,6 @@ const getByUserIdPersonService = async (user_id, transaction, page = 1, filters 
 
   let options = {
     where,
-    limit,
-    offset,
     ...(transaction ? { transaction } : {})
   };
 

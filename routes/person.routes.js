@@ -11,6 +11,6 @@ router.put('/update/:id', authMiddleware, updatePerson);
 // Route to get a person by ID
 router.get('/:id', authMiddleware, getPersonById);
 // Route to get all persons for the authenticated user
-router.get('/page/:page', authMiddleware, getAllPersons);
+router.get('/', authMiddleware, getAllPersons);
 
 module.exports = router;

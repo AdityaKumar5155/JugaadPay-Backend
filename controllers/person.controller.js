@@ -51,9 +51,8 @@ const updatePerson = async (req, res) => {
 const getAllPersons = async (req, res) => {
     try {
         const userId = req.user.id;
-        const page = parseInt(req.params.page) || 1;
         const filters = req.query || {};
-        const persons = await getByUserIdPersonService(userId, null, page, filters);
+        const persons = await getByUserIdPersonService(userId, null, filters);
         const totalCount = await getNumberOfPersonsByUserIdPersonService(userId);
         const pages = Math.ceil(totalCount / 50); // Assuming 50 items per page
         res.status(200).json({
