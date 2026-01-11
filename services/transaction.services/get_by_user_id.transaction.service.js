@@ -9,6 +9,10 @@ const getByUserIdTransactionService = async (user_id, transaction, filters = {})
     const startDate = new Date(filters.year, filters.month - 1, 1);
     const endDate = new Date(filters.year, filters.month, 0, 23, 59, 59, 999);
     filter.datetime = { $between: [startDate, endDate] };
+  } else if (filters.year) {
+    const startDate = new Date(filters.year, 0, 1);
+    const endDate = new Date(filters.year, 11, 31, 23, 59, 59, 999);
+    filter.datetime = { $between: [startDate, endDate] };
   }
 
   if (filters.type) {

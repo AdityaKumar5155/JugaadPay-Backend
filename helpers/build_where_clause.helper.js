@@ -1,3 +1,5 @@
+const { Op } = require("sequelize");
+
 const buildWhereClause = (user_id, filters = {}) => {
   const where = { user_id };
   for (const key in filters) {

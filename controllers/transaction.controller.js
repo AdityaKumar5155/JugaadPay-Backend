@@ -4,7 +4,7 @@ const createReceivedTransactionService = require('../services/transaction.servic
 const getByUserIdTransactionService = require('../services/transaction.services/get_by_user_id.transaction.service');
 const sentCreateTransactionSchema = require('../schemas/transaction.schemas/sent_create.transaction.schema');
 const receivedCreateTransactionSchema = require('../schemas/transaction.schemas/received_create.transaction.schema');
-const getNumberOfTransactionsByUserIdService = require('../services/transaction.services/get_number_of_transactions_by_user_id.transaction.service');
+// const getNumberOfTransactionsByUserIdService = require('../services/transaction.services/get_number_of_transactions_by_user_id.transaction.service');
 // Get transactions for a user with filters and pagination (with total count and pages)
 const getTransactions = async (req, res) => {
   try {
@@ -13,18 +13,19 @@ const getTransactions = async (req, res) => {
     const transactions = await getByUserIdTransactionService(user_id, null, filters);
 
     // Get total count for pagination
-    const totalCount = await getNumberOfTransactionsByUserIdService(user_id, null, filters);
-    const pages = Math.ceil(totalCount / 50); // Assuming 50 items per page
+    // const totalCount = await getNumberOfTransactionsByUserIdService(user_id, null, filters);
+    // const pages = Math.ceil(totalCount / 50); // Assuming 50 items per page
 
     return res.status(200).json({
       success: true,
       data: {
         transactions,
-        totalCount,
-        pages
+        // totalCount,
+        // pages
       }
     });
   } catch (err) {
+    console.error('Error fetching transactions:', err);
     return res.status(500).json({ error: err.message });
   }
 };

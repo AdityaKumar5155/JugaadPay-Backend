@@ -53,7 +53,7 @@ Date: 2025-08-11
   - Endpoint: GET /persons/:id (JWT required)
   - Behavior: Returns a person owned by the user or 404.
 - FR-P4 List persons (paginated + filters)
-  - Endpoint: e.g., GET /persons/page/:page (JWT required, see person.routes)
+  - Endpoint: e.g., GET /persons (JWT required, see person.routes)
   - Query filters supported: name (full name), mobile, email
   - Behavior: Limit=50/page, returns persons, totalCount, pages.
   - Notes: name is treated as full_name and applied to CONCAT(first_name, ' ', last_name) with case-insensitive LIKE.
@@ -155,7 +155,7 @@ Note: These reflect the current mounting + route definitions.
   - PUT  /users/profile
 - Persons
   - Mounted at /persons; includes create, update, get by id, and paginated list (see controllers/person.controller.js)
-  - Example: GET /persons/page/:page with query filters (name, mobile, email)
+  - Example: GET /persons with query filters (name, mobile, email)
 - Transactions
   - POST /transactions/sent
   - POST /transactions/received
